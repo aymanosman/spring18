@@ -32,10 +32,58 @@ Check compare_eq_iff.
 
 Theorem insert_member: forall t n, BST t -> member n (insert n t) = true.
 Proof.
-Admitted.
+  induction t.
+  - intros.
+    unfold BST in H.
+    simpl.
+    rewrite compare_refl.
+    reflexivity.
+
+  - simpl.
+    intros.
+    remember (compare n d).
+    destruct c.
+    + simpl.
+      rewrite <- Heqc.
+      reflexivity.
+    + simpl.
+      rewrite <- Heqc.
+      apply IHt1.
+      apply H.
+    + simpl.
+      rewrite <- Heqc.
+      apply IHt2.
+      apply H.
+Qed.
+
+(* Theorem left_BST: forall t, BST (Node d t1 t2) -> BST t1. *)
+(* Proof. *)
+(* Admitted. *)
+
 
 Theorem insert_ok: forall t n, BST t -> BST (insert n t).
 Proof.
+  induction t.
+  - intros.
+    compute.
+    firstorder.
+
+  - intros.
+    simpl.
+    remember (compare n d).
+    induction c.
+    + simpl.
+      assumption.
+    + simpl.
+      destruct H.
+      remember (IHt1 n H).
+      split.
+      assumption.
+      split.
+
+      Check (tree_lt d (insert n t1)).
+
+
 Admitted.
 
 Theorem delete_ok: forall t n, BST t -> BST (delete n t).
