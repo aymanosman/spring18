@@ -82,8 +82,7 @@ Fixpoint BST (tr: tree) :=
   match tr with
   | Leaf => True
   | Node v lt rt =>
-    BST lt /\ tree_lt v lt /\
-    BST rt /\ tree_gt v rt
+    BST lt /\ tree_lt v lt /\ BST rt /\ tree_gt v rt
   end.
 
 (* Here is a typical insertion routine for BSTs.

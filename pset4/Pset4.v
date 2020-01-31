@@ -60,28 +60,41 @@ Qed.
 (* Proof. *)
 (* Admitted. *)
 
-
 Theorem insert_ok: forall t n, BST t -> BST (insert n t).
 Proof.
   induction t.
-  - intros.
-    compute.
-    firstorder.
+  compute.
+  firstorder.
 
-  - intros.
-    simpl.
-    remember (compare n d).
-    induction c.
-    + simpl.
-      assumption.
-    + simpl.
-      destruct H.
-      remember (IHt1 n H).
-      split.
-      assumption.
-      split.
+  intros.
+  simpl.
+  destruct (compare n d).
 
-      Check (tree_lt d (insert n t1)).
+
+  Check <->.
+  Check iff.
+
+  destruct c.
+  assumption.
+  simpl.
+  split.
+
+  destruct H.
+  exact (IHt1 n H).
+  destruct H.
+  split.
+
+
+
+  Check tree_gt.
+  remember (compare_lt_iff n d).
+
+  Check compare_lt_iff.
+
+
+
+  Check tree_lt.
+  Check compare_lt_iff.
 
 
 Admitted.
